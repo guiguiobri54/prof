@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -35,5 +36,21 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function authenticated(Request $request, $user)
+    {
+
+        if($user->isAdmin()) {
+            $this->redirectTo = '/Admin/Home';
+        }elseif ($user->isHeadmaster()){
+            $this->redirectTo = '/Headmaster/Home';
+        }elseif ($user->isTeacher()){
+            $this->$this->redirectTo = '/Teacher/Home';
+        }elseif ($user->isStudent()){
+            $this->redirectTo = '/Student/Home';
+        }elseif ($user->isDefaultUser()){
+            $this->redirectTo = '/DefaultUser/Home';
+        }
     }
 }
