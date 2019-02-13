@@ -9,7 +9,7 @@ class AdminController extends Controller
     //
     public function home()
     {
-        return view('AdminHome');
+        return view('(role 4)AdminViews.AdminHome');
     }
     //
 }

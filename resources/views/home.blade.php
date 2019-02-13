@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    Connecté sur session Etudiant
+                    Connecté sur session Erreur
                 </div>
             </div>
         </div>

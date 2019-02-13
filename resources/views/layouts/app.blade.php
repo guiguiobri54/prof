@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }} </title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -27,10 +27,14 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
+                    <!-- Welcome page link -->
+                    <ul class="navbar-brand">
+                        <li><a href="{{ url('/') }}">Accueil</a></li>
+                        <li><a href="{{ url('/') }}">Utilisateurs</a></li>
+                        <li><a href="{{ url('/Admin/School') }}">Etablissements</a></li>
+                        <li><a href="{{ url('/') }}">Matières</a></li>
+                        <li><a href="{{ url('/') }}">Messages</a></li>
+                    </ul>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">

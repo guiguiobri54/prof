@@ -28,3 +28,5 @@ Route::get('/Headmaster/Home', 'HeadmasterController@home')->name('HeadmasterHom
 Route::get('/Teacher/Home', 'TeacherController@home')->name('TeacherHome');
 
 Route::get('/Student/Home', 'StudentController@home')->name('StudentHome');
+
+Route::resource('/Admin/School', 'SchoolController');
