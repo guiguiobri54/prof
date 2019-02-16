@@ -30,3 +30,5 @@ Route::get('/Teacher/Home', 'TeacherController@home')->name('TeacherHome');
 Route::get('/Student/Home', 'StudentController@home')->name('StudentHome');
 
 Route::resource('/Admin/School', 'SchoolController');
+
+route::resource('/Admin/Subject', 'SubjectController');

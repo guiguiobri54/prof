@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\School;
+
 use App\Http\Requests\SchoolCreateRequest;
 
 use App\Http\Requests\SchoolUpdateRequest;
@@ -48,7 +50,7 @@ class SchoolController extends Controller
 
     {
 
-        return view('create');
+        return view('SchoolCreate');
 
     }
 
@@ -57,10 +59,10 @@ class SchoolController extends Controller
 
     {
 
-        $school = $this->schoolRepository->store($request->all());
+          $school= $this->schoolRepository->store($request->all());
 
 
-        return redirect('school')->withOk("L'établissement scolaire " . $school->name . " a été créé.");
+        return view('AddedSchool');
 
     }
 
@@ -72,7 +74,7 @@ class SchoolController extends Controller
         $school = $this->schoolRepository->getById($id);
 
 
-        return view('show',  compact('school'));
+        return view('SchoolShow',  compact('school'));
 
     }
 
@@ -84,7 +86,7 @@ class SchoolController extends Controller
         $school = $this->schoolRepository->getById($id);
 
 
-        return view('edit',  compact('school'));
+        return view('SchoolEdit',  compact('school'));
 
     }
 
@@ -97,7 +99,7 @@ class SchoolController extends Controller
 
 
 
-        return redirect('school')->withOk("L'établissement scolaire " . $request->input('name') . " a été modifié.");
+        return view('UpdatedSchool');
 
     }
 

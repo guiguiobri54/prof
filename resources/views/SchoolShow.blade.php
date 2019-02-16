@@ -1,4 +1,4 @@
-@extends('template')
+@extends('AdminSchoolTemplate')
 
 
 @section('contenu')
@@ -9,19 +9,20 @@
 
         <div class="panel panel-primary">
 
-            <div class="panel-heading">Fiche d'utilisateur</div>
+            <div class="panel-heading">Détails</div>
 
             <div class="panel-body">
 
-                <p>Nom : {{ $user->name }}</p>
+                <p>Pays : {{ $school->country }}</p>
 
-                <p>Email : {{ $user->email }}</p>
+                <p>Grade : {{ $school->grade }}</p>
 
-                @if($user->admin == 1)
+                <p>Nom : {{ $school->name }}</p>
 
-                    Administrateur
+                <p>Dep : {{ $school->department }}</p>
 
-                @endif
+                <p>Ville : {{ $school->town }}</p>
+
 
             </div>
 

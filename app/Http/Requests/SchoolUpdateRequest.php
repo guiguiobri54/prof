@@ -25,11 +25,11 @@ class SchoolUpdateRequest extends FormRequest
     {
         return [
             //
-            'country' =>'required'|'between:3,5'|'alpha',
+            'country' =>'required|min:3|max:30|alpha',
             'grade' =>'required',
-            'name' =>'required'|'between:3,40',
-            'department' =>'required'|'between:2,3'|'numeric',
-            'town' =>'required'|'between:2,40'
+            'name' =>'required|between:3,40',
+            'department' =>'required|numeric',
+            'town' =>'required|between:2,40'
         ];
     }
 }

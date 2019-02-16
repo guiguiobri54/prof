@@ -1,4 +1,4 @@
-@extends('AdminTemplate')
+@extends('AdminSchoolTemplate')
 
 
 @section('contenu')
@@ -75,7 +75,7 @@
 
         </div>
 
-        {!! link_to_route('School.create', 'Ajouter un etablissement', [], ['class' => 'btn btn-info pull-right']) !!}
+        {!! link_to_route('School.create', 'Ajouter un établissement', [], ['class' => 'btn btn-info pull-right']) !!}
 
         {!! $links !!}
 

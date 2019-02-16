@@ -12,7 +12,7 @@ class SchoolRepository
 {
 
 
-    protected $School;
+    protected $school;
 
 
     public function __construct(School $school)

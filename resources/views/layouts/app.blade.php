@@ -29,10 +29,10 @@
 
                     <!-- Welcome page link -->
                     <ul class="navbar-brand">
-                        <li><a href="{{ url('/') }}">Accueil</a></li>
+                        <li><a href="{{ url('/Admin/Home') }}">Accueil</a></li>
                         <li><a href="{{ url('/') }}">Utilisateurs</a></li>
                         <li><a href="{{ url('/Admin/School') }}">Etablissements</a></li>
-                        <li><a href="{{ url('/') }}">Matières</a></li>
+                        <li><a href="{{ url('/Admin/Subject') }}">Matières</a></li>
                         <li><a href="{{ url('/') }}">Messages</a></li>
                     </ul>
                 </div>

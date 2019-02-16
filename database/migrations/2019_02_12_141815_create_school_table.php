@@ -26,9 +26,9 @@ class CreateSchoolTable extends Migration
 
             $table->string('name', 60 );
 
-            $table->boolean('department');
+            $table->string('department');
 
-            $table->string('town',60);
+            $table->string('town', strtoupper('town'));
 
         });
     }
