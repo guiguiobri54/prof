@@ -1,7 +1,7 @@
-@extends('AdminSchoolTemplate')
+@extends('layouts.admin')
 
 
-@section('contenu')
+@section('content')
 
     <br>
 
@@ -13,7 +13,7 @@
 
         @endif
 
-        <div class="panel panel-primary">
+        <div class="panel panel-default">
 
             <div class="panel-heading">
 
@@ -76,6 +76,8 @@
         </div>
 
         {!! link_to_route('School.create', 'Ajouter un établissement', [], ['class' => 'btn btn-info pull-right']) !!}
+
+            {!! link_to_route('AdminHome', 'Retour au menu', [], ['class' => 'btn btn-default pull-left']) !!}
 
         {!! $links !!}
 

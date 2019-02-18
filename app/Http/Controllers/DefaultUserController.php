@@ -8,7 +8,7 @@ class DefaultUserController extends Controller
 {
     public function home()
     {
-        return view('/(role 0)DefaultUserViews/DefaultUserHome');
+        return view('/(role 0)DefaultUserViews.DefaultUserHome');
     }
     //
 }

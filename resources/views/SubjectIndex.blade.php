@@ -1,7 +1,7 @@
-@extends('AdminSchoolTemplate')
+@extends('layouts.admin')
 
 
-@section('contenu')
+@section('content')
 
     <br>
 
@@ -13,7 +13,7 @@
 
         @endif
 
-        <div class="panel panel-primary">
+        <div class="panel panel-default">
 
             <div class="panel-heading">
 
@@ -33,6 +33,10 @@
 
                     <th>Attribut</th>
 
+                    <th> </th>
+
+                    <th> </th>
+
 
 
                 </tr>
@@ -51,6 +55,18 @@
 
                         <td class="text-primary"><strong>{!! $sub->attribute !!}</strong></td>
 
+                        <td>{!! link_to_route('Subject.edit', 'Modifier', [$sub->id], ['class' => 'btn btn-warning btn-block']) !!}</td>
+
+                        <td>
+
+                            {{ Form::open(['method' => 'DELETE', 'route' => ['Subject.destroy', $sub->id]]) }}
+
+                            {!! Form::submit('Supprimer', ['class' => 'btn btn-danger btn-block', 'onclick' => 'return confirm(\'Vraiment supprimer cette matière ?\')']) !!}
+
+                            {!! Form::close() !!}
+
+                        </td>
+
 
 
                     </tr>
@@ -63,7 +79,9 @@
 
         </div>
 
+            {!! link_to_route('Subject.create', 'Ajouter une matière', [], ['class' => 'btn btn-info pull-right']) !!}
 
+            {!! link_to_route('AdminHome', 'Retour au menu', [], ['class' => 'btn btn-default pull-left']) !!}
 
     </div>
 

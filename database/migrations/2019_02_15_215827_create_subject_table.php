@@ -22,7 +22,7 @@ class CreateSubjectTable extends Migration
 
              $table->string('name');
 
-             $table->string('attribute');
+             $table->string('attribute')->default('');
         });
 
     }

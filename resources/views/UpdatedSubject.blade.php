@@ -9,11 +9,11 @@
 
         <div class="panel panel-success">
 
-            <div class="panel-heading">Modifié !</div>
+            <div class="panel-heading">Modifiée !</div>
 
             <div class="panel-body">
 
-                L'établissement scolaire a été modifié avec succès !
+                Matière modifiée avec succès !
 
             </div>
 
@@ -21,7 +21,7 @@
 
         <div class="btn btn-default">
 
-            <a href={{route('School.index')}} >
+            <a href={{route('Subject.index')}} >
 
             <span class="glyphicon glyphicon-circle-arrow-left"></span> Retour
 

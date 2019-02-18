@@ -1,7 +1,7 @@
-@extends('AdminSchoolTemplate')
+@extends('layouts.admin')
 
 
-@section('contenu')
+@section('content')
 
     <div class="col-sm-offset-4 col-sm-4">
 
@@ -59,7 +59,7 @@
                     </div>
 
 
-                    {!! Form::submit('Envoyer', ['class' => 'btn btn-primary pull-right']) !!}
+                    {!! Form::submit('Créer', ['class' => 'btn btn-success pull-right']) !!}
 
                     {!! Form::close() !!}
 

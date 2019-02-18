@@ -4,37 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Controllers\Controller;
+use App\User;
 
-use App\Subject;
-
-use App\Http\Requests;
-
-use Illuminate\Support\Facades\Input;
-
-
-
-
-class SubjectController extends Controller
+class UserManagingController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     *
      */
-        protected $subject;
-
-    /**
-     * @return mixed
-     */
+        protected $user;
 
 
     public function index()
     {
         //
-
-        $subjects=Subject::all();
-        return view('SubjectIndex', compact('subjects'));
+        $users = User::all();
+        return compact('users');
     }
 
     /**
@@ -45,7 +32,6 @@ class SubjectController extends Controller
     public function create()
     {
         //
-        return view('SubjectCreate');
     }
 
     /**
@@ -56,27 +42,7 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'attribute' => 'sometimes'
-        ]);
-
-
-        /*
-        $subject= new Subject(['name', 'attribute']);
-
-        $subject->name = $request->name;
-        $subject->attibute = $request->attribute;
-
-       $request->all()->save; */
-
-        $subject = new Subject;
-        $subject->name = Input::get('name');
-        $subject->attribute = Input::get('attribute');
-        $subject->save();
-
-
-        return back()->with('message', 'enregistré');
+        //
     }
 
     /**
@@ -99,8 +65,6 @@ class SubjectController extends Controller
     public function edit($id)
     {
         //
-        $subject = Subject::findorfail($id);
-        return view ('SubjectEdit', compact('subject'));
     }
 
     /**
@@ -113,13 +77,6 @@ class SubjectController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $subject = Subject::Find($id);
-
-        $subject->name = $request->get('name');
-        $subject->attribute = $request->get('attribute');
-        $subject->save();
-
-        return view('UpdatedSubject');
     }
 
     /**
@@ -131,11 +88,5 @@ class SubjectController extends Controller
     public function destroy($id)
     {
         //
-        $subject=Subject::find($id);
-        $subject->delete();
-
-        return back();
     }
-
-
 }

@@ -9,7 +9,7 @@ class TeacherController extends Controller
     //
     public function home()
     {
-        return view('TeacherHome');
+        return view('/(role 2)TeachersViews.TeacherHome');
     }
     //
 }

@@ -1,7 +1,7 @@
-@extends('AdminSchoolTemplate')
+@extends('layouts.admin')
 
 
-@section('contenu')
+@section('content')
 
     <div class="col-sm-offset-4 col-sm-4">
 

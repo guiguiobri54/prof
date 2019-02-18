@@ -9,7 +9,7 @@ class StudentController extends Controller
     //
     public function home()
     {
-        return view('StudentHome');
+        return view('/(role 1)StudentsViews.StudentHome');
     }
     //
 }

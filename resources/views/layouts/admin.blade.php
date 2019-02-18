@@ -8,10 +8,20 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Prof') }} </title>
+    <title>Prof </title>
+    {!! Html::style('https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css') !!}
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        {!! Html::style('https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css') !!}
+
+        <!--[if lt IE 9]>
+
+    {{ Html::style('https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js') }}
+
+    {{ Html::style('https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js') }}
+
+    <![endif]-->
+
+    <style> textarea { resize: none; } </style>
 </head>
 <body>
     <div id="app">
@@ -35,7 +45,13 @@
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
-
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ url('/Admin/Home') }}">Accueil</a></li>
+                        <li><a href="{{ url('/Admin/UserManaging') }}">Utilisateurs</a></li>
+                        <li><a href="{{ url('/Admin/School') }}">Etablissements</a></li>
+                        <li><a href="{{ url('/Admin/Subject') }}">Matières</a></li>
+                        <li><a href="{{ url('/Admin/Message') }}">Messages</a></li>
+                    </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">

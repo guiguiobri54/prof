@@ -46,7 +46,7 @@ class LoginController extends Controller
         }elseif ($user->isHeadmaster()){
             $this->redirectTo = '/Headmaster/Home';
         }elseif ($user->isTeacher()){
-            $this->$this->redirectTo = '/Teacher/Home';
+            $this->redirectTo = '/Teacher/Home';
         }elseif ($user->isStudent()){
             $this->redirectTo = '/Student/Home';
         }elseif ($user->isDefaultUser()){

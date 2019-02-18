@@ -9,7 +9,7 @@ class HeadmasterController extends Controller
     //
     public function home()
     {
-        return view('HeadmasterHome');
+        return view('/(role 3)HeadmastersViews.HeadmasterHome');
     }
     //
 }

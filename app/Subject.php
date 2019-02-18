@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Subject extends Model
 {
     //
-    protected $subjects;
+    protected $fillable = [
+        'name',
+        'attribute'
+    ];
+
     public $timestamps = false;
 }

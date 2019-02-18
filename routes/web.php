@@ -32,3 +32,5 @@ Route::get('/Student/Home', 'StudentController@home')->name('StudentHome');
 Route::resource('/Admin/School', 'SchoolController');
 
 route::resource('/Admin/Subject', 'SubjectController');
+
+route::resource('/Admin/UserManaging', 'UserManagingController');
