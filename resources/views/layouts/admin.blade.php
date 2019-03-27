@@ -50,7 +50,7 @@
                         <li><a href="{{ url('/Admin/UserManaging') }}">Utilisateurs</a></li>
                         <li><a href="{{ url('/Admin/School') }}">Etablissements</a></li>
                         <li><a href="{{ url('/Admin/Subject') }}">Matières</a></li>
-                        <li><a href="{{ url('/Admin/Message') }}">Messages</a></li>
+                        <li><a href="{{ url('/Admin/Message') }}">Messagerie</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

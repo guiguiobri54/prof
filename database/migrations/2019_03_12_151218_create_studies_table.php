@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Ajoutpays extends Migration
+class CreateStudiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,23 @@ class Ajoutpays extends Migration
      */
     public function up()
     {
-        Schema::create('countries', function (Blueprint $table) {
+        Schema:: create('studies', function (Blueprint $table)
+        {
             $table->increments('id');
             $table->string('name');
+            $table->timestamps();
+            $table->integer('classroom_id')->unsigned();
+            $table->foreign('classroom_id')
+
+                ->references('id')
+
+                ->on('classrooms')
+
+                ->onDelete('cascade')
+
+                ->onUpdate('cascade');
         });
+
     }
 
     /**
@@ -26,6 +39,6 @@ class Ajoutpays extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('countries');
+        Schema::drop('studies');
     }
 }

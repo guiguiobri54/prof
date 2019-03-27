@@ -17,11 +17,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@authenticated')->name('home');
 
 Route::get('/DefaultUser/Home', 'DefaultUserController@home')->name('DefaultUserHome');
 
-Route::get('/Admin/Home', 'AdminController@home')->name('AdminHome');
+
 
 Route::get('/Headmaster/Home', 'HeadmasterController@home')->name('HeadmasterHome');
 
@@ -29,8 +29,24 @@ Route::get('/Teacher/Home', 'TeacherController@home')->name('TeacherHome');
 
 Route::get('/Student/Home', 'StudentController@home')->name('StudentHome');
 
-Route::resource('/Admin/School', 'SchoolController');
+route::resource('/Profile', 'ProfileController');
 
-route::resource('/Admin/Subject', 'SubjectController');
+route::group(['prefix' => 'Admin', 'middleware' => 'is.admin'], function(){
 
-route::resource('/Admin/UserManaging', 'UserManagingController');
+    Route::get('/Home', 'AdminController@home')->name('AdminHome');
+    Route::resource('/School', 'SchoolController');
+    route::resource('/Subject', 'SubjectController');
+    route::resource('/UserManaging', 'UserManagingController');
+});
+
+//Route::get('/Profile/MyProfile','ProfileController@MyProfile')->name('MyProfile');
+
+route::resource('/Classroom', 'ClassroomController');
+
+route::resource('/Study', 'StudyController');
+
+route::get('/Classroom/StudiesList', 'ClassroomController@list')->name('Classroom.list');
+
+route::get('/Study/{study_id}/File/', 'FileController@showUploadForm') ->name('upload.file');
+
+route::resource('/document', 'DocumentController');

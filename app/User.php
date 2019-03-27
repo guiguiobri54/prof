@@ -46,5 +46,16 @@ class User extends Authenticatable
     public function isDefaultUser(){
         return $this->role==0;
     }
+
+    public function profiles()
+    {
+        return $this->hasOne('App\Profile', 'user_id');
+
+    }
+
+    public function classrooms()
+    {
+        return $this->hasMany('App\Classroom');
+    }
 }
 

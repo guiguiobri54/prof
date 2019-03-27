@@ -45,7 +45,17 @@
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
-
+                    <ul class="nav navbar-nav">
+                        @if(Auth::user()->role == '1')
+                            <li><a href="{{ url('/Student/Home') }}">Accueil</a></li>
+                        @else(Auth::user()->role == '2')
+                            <li><a href="{{ url('/Teacher/Home') }}">Accueil</a></li>
+                        @endif
+                        <li><a href="{{ route('Profile.index')}}">Mon profil</a></li>
+                        <li><a href="{{ route('Classroom.index') }}">Cours</a></li>
+                        <li><a href="{{ url('') }}">Messagerie</a></li>
+                        <li><a target="_blank" href="{{ url('https://www.index-education.com/fr/pronote-info191-demo-des-espaces.php#')}}">PRONOTE</a></li>
+                    </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
@@ -84,5 +94,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+@stack('scripts')
 </body>
 </html>

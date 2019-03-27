@@ -43,7 +43,7 @@ class LoginController extends Controller
     {
 
         if($user->isAdmin()) {
-            $this->redirectTo = '/Admin/Home';
+            $this->redirectTo = route('AdminHome');
         }elseif ($user->isHeadmaster()){
             $this->redirectTo = '/Headmaster/Home';
         }elseif ($user->isTeacher()){
