@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStudiesTable extends Migration
+class CreateDocumentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,27 @@ class CreateStudiesTable extends Migration
      */
     public function up()
     {
-        Schema:: create('studies', function (Blueprint $table)
-        {
+        Schema::create('documents', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('filename');
+            $table->string('mime');
+            $table->string('path');
+            $table->string('full_path');
+            $table->integer('size');
+            $table->string('category');
             $table->timestamps();
-            $table->integer('classroom_id')->unsigned();
-            $table->foreign('classroom_id')
+            $table->integer('study_id')->unsigned();
+            $table->foreign('study_id')
 
                 ->references('id')
 
-                ->on('classrooms')
+                ->on('studies')
 
                 ->onDelete('cascade')
 
                 ->onUpdate('cascade');
-        });
 
+        });
     }
 
     /**
@@ -39,6 +43,6 @@ class CreateStudiesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('studies');
+        Schema::dropIfExists('documents');
     }
 }

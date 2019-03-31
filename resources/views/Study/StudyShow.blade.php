@@ -59,7 +59,12 @@
 
                         <td> <ul>
                                 @foreach($lessons as $lesson)
-                                    <li><a href="{{$lesson->path}}"> {{$lesson->filename}}</a></li>
+                                    {{ Form::open(['method' => 'DELETE', 'route' => ['File.destroy', $lesson->id]]) }}
+                                    <li><a href="{{$lesson->full_path}}"> {{$lesson->filename}}</a>
+                                        {{ Form::button('<span  class="glyphicon glyphicon-remove"></span>', ['class'=>'btn', 'style'=>'background-color:transparent', 'onclick' => 'return confirm(\'Vraiment supprimer cet intitulé ?\')', 'type'=>'submit']) }}
+                                        {!! Form::close() !!}
+                                    </li>
+
                                     @endforeach
                                         <br>
 
@@ -69,7 +74,7 @@
 
                                     <li>
 
-                                        {!! Form::open(['action' => 'DocumentController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                                        {!! Form::open(['action' => 'FileController@saveFile', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 
                                         {!! Form::file('file', null, ['class' => 'form-control']) !!}
 
@@ -107,7 +112,11 @@
                         <td><ul>
 
                                 @foreach($annexes as $annexe)
-                                    <li><a href="{{$annexe->path}}"> {{$annexe->filename}}</a></li>
+                                    {{ Form::open(['method' => 'DELETE', 'route' => ['File.destroy', $annexe->id]]) }}
+                                    <li><a href="{{$annexe->path}}"> {{$annexe->filename}}</a>
+
+                                        {{ Form::button('<span  class="glyphicon glyphicon-remove"></span>', ['class'=>'btn', 'style'=>'background-color:transparent', 'onclick' => 'return confirm(\'Vraiment supprimer cet intitulé ?\')', 'type'=>'submit']) }}
+                                        {!! Form::close() !!}
                                 @endforeach
                                     <br>
 
@@ -117,7 +126,7 @@
 
                                         <li>
 
-                                            {!! Form::open(['action' => 'DocumentController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                                            {!! Form::open(['action' => 'FileController@saveFile', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 
                                             {!! Form::file('file', null, ['class' => 'form-control']) !!}
 
@@ -155,8 +164,12 @@
 
                         <td>
                             <ul>
-                                @foreach($exercices as $exercice)
-                                    <li><a href="{{$exercice->path}}"> {{$exercice->filename}}</a></li>
+                                @foreach($exercises as $exercise)
+                                    {{ Form::open(['method' => 'DELETE', 'route' => ['File.destroy', $exercise->id]]) }}
+                                    <li><a href="{{$exercise->path}}"> {{$exercise->filename}}</a>
+
+                                        {{ Form::button('<span  class="glyphicon glyphicon-remove"></span>', ['class'=>'btn', 'style'=>'background-color:transparent', 'onclick' => 'return confirm(\'Vraiment supprimer cet intitulé ?\')', 'type'=>'submit']) }}
+                                        {!! Form::close() !!}
                                 @endforeach
                                 <br>
 
@@ -166,13 +179,13 @@
 
                                     <li>
 
-                                        {!! Form::open(['action' => 'DocumentController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                                        {!! Form::open(['action' => 'FileController@saveFile', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 
                                         {!! Form::file('file', null, ['class' => 'form-control']) !!}
 
                                         {!! $errors->first('file', '<small class="help-block">:message</small>') !!}
 
-                                        {!! Form::hidden('category','exercice' )!!}
+                                        {!! Form::hidden('category','exercise' )!!}
 
                                         {!! Form::hidden('study_id',$study->id )!!}
 
@@ -208,7 +221,7 @@
 
                         <td>
 
-                            {{ Form::open(['method' => 'DELETE', 'route' => ['Classroom.destroy', $study->id]]) }}
+                            {{ Form::open(['method' => 'DELETE', 'route' => ['Study.destroy', $study->id]]) }}
 
                             {!! Form::submit('Supprimer', ['class' => 'btn btn-danger btn-block', 'onclick' => 'return confirm(\'Vraiment supprimer ce cours ?\')']) !!}
 
@@ -223,16 +236,19 @@
                 </tbody>
 
             </table>
+                                    @if($errors->any())
+                                        <p style="margin-left: 2% ; color:red">{{$errors->first()}}</p>
+                                        @endif
 
         </div>
 
 
-
-        <a href="javascript:history.back()" class="btn btn-primary">
+        <a href="{{route('Study.index')}}" class="btn btn-primary">
 
             <span class="glyphicon glyphicon-circle-arrow-left"></span> Retour
 
         </a>
+
 
 
     </div>

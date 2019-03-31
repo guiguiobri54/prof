@@ -9,7 +9,7 @@
 
         <div class="panel panel-primary">
 
-            <div class="panel-heading">Création d'un  cours</div>
+            <div class="panel-heading">Création d'une classe</div>
 
             <div class="panel-body">
 

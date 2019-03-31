@@ -22,9 +22,6 @@ Route::get('/home', 'HomeController@authenticated')->name('home');
 Route::get('/DefaultUser/Home', 'DefaultUserController@home')->name('DefaultUserHome');
 
 
-
-Route::get('/Headmaster/Home', 'HeadmasterController@home')->name('HeadmasterHome');
-
 Route::get('/Teacher/Home', 'TeacherController@home')->name('TeacherHome');
 
 Route::get('/Student/Home', 'StudentController@home')->name('StudentHome');
@@ -49,4 +46,6 @@ route::get('/Classroom/StudiesList', 'ClassroomController@list')->name('Classroo
 
 route::get('/Study/{study_id}/File/', 'FileController@showUploadForm') ->name('upload.file');
 
-route::resource('/document', 'DocumentController');
+route::post('/File', 'FileController@saveFile')->name('save.file');
+
+route::delete('/File/{file_id}', 'FileController@destroy')->name('File.destroy');

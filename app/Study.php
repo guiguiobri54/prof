@@ -8,12 +8,13 @@ class Study extends Model
 {
     protected $fillable = [
         'name',
-        'classroom_id',
+        'tag',
+        'user_id',
     ];
 
-    public function classroom()
+    public function user()
     {
-        return $this->belongsTo('App\Classroom');
+        return $this->belongsTo('App\User');
     }
 
     public function documents()
@@ -21,7 +22,16 @@ class Study extends Model
         return $this->hasMany('App\Document');
     }
 
-    public function lessons(){
+    public function lessons()
+    {
         return $this->hasMany('App\Document')->where('category','lesson')->orderBy('filename');
+    }
+
+    public function annexes(){
+        return $this->hasMany('App\Document')->where('category','annexe')->orderBy('filename');
+    }
+
+    public function exercises(){
+        return $this->hasMany('App\Document')->where('category','exercise')->orderBy('filename');
     }
 }

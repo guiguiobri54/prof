@@ -52,7 +52,10 @@
                             <li><a href="{{ url('/Teacher/Home') }}">Accueil</a></li>
                         @endif
                         <li><a href="{{ route('Profile.index')}}">Mon profil</a></li>
-                        <li><a href="{{ route('Classroom.index') }}">Cours</a></li>
+                        <li><a href="{{ route('Classroom.index') }}">Classes</a></li>
+                            @if(Auth::user()->role == '2')
+                                <li><a href="{{route('Study.index')}}">Bibliothèque</a> </li>
+                            @endif
                         <li><a href="{{ url('') }}">Messagerie</a></li>
                         <li><a target="_blank" href="{{ url('https://www.index-education.com/fr/pronote-info191-demo-des-espaces.php#')}}">PRONOTE</a></li>
                     </ul>

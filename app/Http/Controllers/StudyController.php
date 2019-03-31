@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Classroom;
 use App\Study;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\File;
 
 class StudyController extends Controller
 {
@@ -23,7 +25,7 @@ class StudyController extends Controller
 
 
 
-        return view('StudyIndex', compact('studies','filenames', 'docs'));
+        return view('Study.StudyIndex', compact('studies','filenames', 'docs'));
 
        // return view('StudiesList', compact('studies'));
     }
@@ -35,7 +37,7 @@ class StudyController extends Controller
      */
     public function create()
     {
-        return view('StudyCreate');
+        return view('Study.StudyCreate');
     }
 
     /**
@@ -46,15 +48,33 @@ class StudyController extends Controller
      */
     public function store(Request $request)
     {
-        //$classroom = $request->route('id');
+        $this->validate($request,[
+            'name'=>'required'
+        ]);
 
 
         $study= new Study;
         $study->name = Input::get('name');
-        $study->classroom_id = Input::get('classroom_id');
+        $study->tag = Input::get('tag');
+        $study->user_id = Auth::user()->id;
         $study->save();
 
-        return back();
+        $path = config('users.path');
+        $user_name = Auth::user()->name;
+        $user_directory = $path . '/' . $user_name;
+
+        $id = $study->id;
+
+        //dd($id);
+
+        $study_directory = $user_directory . '/' . $id;
+
+        if(!File::exists($study_directory)){
+            File::makeDirectory($study_directory);
+        }
+
+
+        return redirect('/Study');
 
     }
 
@@ -74,13 +94,13 @@ class StudyController extends Controller
 
         $annexes = $docs-> where('category','annexe');
 
-        $exercices = $docs -> where('category', 'exercice');
+        $exercises = $docs -> where('category', 'exercise');
 
 
 
 
 
-        return view('StudyShow', compact('study', 'docs','annexes','lessons', 'exercices'));
+        return view('Study.StudyShow', compact('study', 'docs','annexes','lessons', 'exercises'));
     }
 
     /**
@@ -114,9 +134,29 @@ class StudyController extends Controller
      */
     public function destroy($id)
     {
+        $path = config('users.path');
+        $user_name = Auth::user()->name;
+        $user_directory = $path . '/' . $user_name;
+
         $study=Study::find($id);
+        $id = $study->id;
+
+        $study_directory = $user_directory . '/' . $id;
+
+        //dd($study_directory);
+
+        if (File::exists($study_directory)) {
+            File::deleteDirectory($study_directory);
+        }
+
+
+
+        //$name=$study->name;
+
         $study->delete();
 
-        return back();
+
+
+        return redirect('/Study');
     }
 }

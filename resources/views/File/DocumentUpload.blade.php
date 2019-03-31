@@ -16,7 +16,7 @@
                 <div class="col-sm-12">
 
 
-                    {!! Form::open(['action' => 'DocumentController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                    {!! Form::open(['action' => 'FileController@saveFile', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 
 
                     <div class="form-group {!! $errors->has('file') ? 'has-error' : '' !!}">

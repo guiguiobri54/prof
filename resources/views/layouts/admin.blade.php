@@ -48,7 +48,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="{{ url('/Admin/Home') }}">Accueil</a></li>
                         <li><a href="{{ url('/Admin/UserManaging') }}">Utilisateurs</a></li>
-                        <li><a href="{{ url('/Admin/School') }}">Etablissements</a></li>
+                        <li><a href="{{ url('/Admin/Home') }}">Etablissements</a></li>
                         <li><a href="{{ url('/Admin/Subject') }}">Matières</a></li>
                         <li><a href="{{ url('/Admin/Message') }}">Messagerie</a></li>
                     </ul>

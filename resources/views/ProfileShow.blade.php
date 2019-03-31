@@ -26,7 +26,7 @@
 
         </div>
 
-        <a href="javascript:history.back()" class="btn btn-primary">
+        <a href="{{route('TeacherHome')}}" class="btn btn-primary">
 
             <span class="glyphicon glyphicon-circle-arrow-left"></span> Retour
 

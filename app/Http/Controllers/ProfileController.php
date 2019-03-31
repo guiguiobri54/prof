@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Profile;
 use App\User;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -57,27 +58,8 @@ class ProfileController extends Controller
             'first_name'=> 'required|min:2|alpha',
             'last_name'=> 'required|min:2|alpha',
             'gender'=> 'required|in:male,female'
-
-
         ]);
-        /*\Illuminate\Validation\Validator::make($input->all(),[
-            'first_name'=> 'required|min:2|alpha',
-            'last_name'=> 'required|min:2|alpha',
-            'gender' => 'required',
-            'user_type' => 'required'
 
-        ]);*/
-
-       /* $profile = new Profile;
-        $profile = $request->input('gender');
-        $profile = $request->input('first_name');
-        $profile = $request->input('last_name');
-        $profile = $request->input('statut');
-        $profile-> user_id = auth()-> id();
-        $profile->store($request->all());*/
-
-       //$user = User::find(auth()->id())->with('profile');
-       //dd($user);
 
         $profile = new Profile;
         $profile->gender = Input::get('gender');
@@ -86,6 +68,14 @@ class ProfileController extends Controller
         $profile->user_type = Input::get('statut');
         $profile->user_id = auth()->id();
         $profile->save();
+
+        $path = config('users.path');
+        $user_name = Auth::user()->name;
+        $user_directory = $path . '/' . $user_name;
+
+        if(!File::exists($user_directory)){
+            File::makeDirectory($user_directory);
+        }
 
         if ($profile->user_type == 'teacher'){
 
@@ -165,8 +155,18 @@ class ProfileController extends Controller
      */
     public function destroy($id)
     {
+
         $profile=Profile::find($id);
         $profile->delete();
+
+        $path = config('users.path');
+        $user_name = Auth::user()->name;
+        $user_directory = $path . '/' . $user_name;
+
+        if(!File::exists($user_directory)){
+            File::deleteDirectory($user_directory);
+        }
+
 
         return redirect ('/');
     }

@@ -31,7 +31,7 @@ class ClassroomController extends Controller
 
 
 
-        return view('ClassroomIndex', compact('classroom'));
+        return view('Classroom.ClassroomIndex', compact('classroom'));
     }
 
     /**
@@ -41,7 +41,7 @@ class ClassroomController extends Controller
      */
     public function create()
     {
-        return view('ClassroomCreate');
+        return view('Classroom.ClassroomCreate');
     }
 
     /**
@@ -52,6 +52,10 @@ class ClassroomController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'name'=>'required'
+        ]);
+
         $classroom = new Classroom;
         $classroom->name = Input::get('name');
         $classroom->subject = Input::get('subject');
@@ -60,7 +64,7 @@ class ClassroomController extends Controller
         $classroom->save();
 
 
-        return back()->with('message', 'enregistré');
+        return redirect('/Classroom');
     }
 
     /**
@@ -75,10 +79,10 @@ class ClassroomController extends Controller
 
        $studies = Classroom::find($id)->studies;
 
-       $directory = config('files.path');
+       //$directory = config('files.path');
 
 
-        $files = File::allFiles($directory);
+      // $files = File::allFiles($directory);
 
        // $filename = $files('basename');
 
@@ -96,7 +100,7 @@ class ClassroomController extends Controller
 
 
 
-        return view('ClassroomShow', compact('classroom','studies', 'files'));
+        return view('Classroom.ClassroomShow', compact('classroom','studies', 'files'));
     }
 
     /**

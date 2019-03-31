@@ -83,9 +83,9 @@
 
         </div>
 
-        {!! link_to_route('Classroom.create', 'Ajouter un cours', [], ['class' => 'btn btn-info pull-right']) !!}
+        {!! link_to_route('Classroom.create', 'Ajouter une classe', [], ['class' => 'btn btn-info pull-right']) !!}
 
-            <a href="javascript:history.back()" class="btn btn-primary">
+            <a href="{{route('TeacherHome')}}" class="btn btn-primary">
 
                 <span class="glyphicon glyphicon-circle-arrow-left"></span> Retour
 
