@@ -20,6 +20,7 @@ class CreateClassroomTable extends Migration
             $table->string('subject')->nullable();
             $table->string('school')->nullable();
             $table->timestamps();
+            $table->string('creator');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')
 

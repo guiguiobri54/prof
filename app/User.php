@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','role', 'gender', 'first_name', 'last_name', 'user_type',
     ];
 
     /**
@@ -45,12 +45,6 @@ class User extends Authenticatable
 
     public function isDefaultUser(){
         return $this->role==0;
-    }
-
-    public function profiles()
-    {
-        return $this->hasOne('App\Profile', 'user_id');
-
     }
 
     public function classrooms()

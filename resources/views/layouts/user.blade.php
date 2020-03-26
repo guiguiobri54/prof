@@ -20,6 +20,7 @@
     {{ Html::style('https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js') }}
 
     <![endif]-->
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 
     <style> textarea { resize: none; } </style>
 </head>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProfileTable extends Migration
+class CreateClassroomSubTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,20 @@ class CreateProfileTable extends Migration
      */
     public function up()
     {
-        Schema::create('profiles', function (Blueprint $table)
+        Schema::create('classroom_subscriptions', function (Blueprint $table)
         {
             $table->increments('id');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('gender');
-            $table->string('user_type');
+            $table->string('user_id');
             $table->timestamps();
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')
+            $table->text('message')->nullable();;
+            $table->integer('classroom_id')->unsigned();
+            $table->foreign('classroom_id')
 
                 ->references('id')
 
-                ->on('users')
+                ->on('classrooms')
 
                 ->onDelete('cascade')
 
@@ -41,7 +41,6 @@ class CreateProfileTable extends Migration
      */
     public function down()
     {
-        //
-        Schema::drop('profiles');
+        Schema::drop('classroom_subs');
     }
 }

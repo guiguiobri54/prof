@@ -22,6 +22,7 @@
     <![endif]-->
 
     <style> textarea { resize: none; } </style>
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 </head>
 <body>
     <div id="app">

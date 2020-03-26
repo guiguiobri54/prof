@@ -6,6 +6,8 @@ use App\Classroom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Middleware\Authorize;
+use App\Policies\ClassroomPolicy;
 use App\User;
 use App\Study;
 use Illuminate\Support\Facades\Storage;
@@ -21,17 +23,30 @@ class ClassroomController extends Controller
      */
     protected $classroom;
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         //obtention de l'id de l'user:
         $id= Auth::user()->id;
 
+        if (Auth::user()->role == '2'){
+
         //recherche de cours par id de l'user:
         $classroom=User::find($id)->classrooms;
 
-
-
-        return view('Classroom.ClassroomIndex', compact('classroom'));
+        return view('Classroom.TeacherClassroomIndex', compact('classroom'));
+        }
+        else{
+            $allClassrooms = Classroom::all();
+            //$profile = User::find($id)->profiles;
+            //$last_name = $profile->last_name;
+           // dd($last_name);
+            return view('Classroom.StudentClassroomIndex', compact('allClassrooms'));
+        }
     }
 
     /**
@@ -41,7 +56,32 @@ class ClassroomController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
+        //$role = User::find($id)->role;
+        if ($user->can('create', Classroom::class))
+        {
         return view('Classroom.ClassroomCreate');
+        }
+        return response('Unauthorized.', 401);;
+    }
+
+    public function list($id)
+    {
+        //$classroom = Classroom::find($id)->name;
+        $classroom = Classroom::find($id);
+        return view('Classroom.ClassroomUsersList', compact('classroom'));
+    }
+
+    public function join(Request $request)
+    {
+        $id= $request->classroom_id;
+
+        $classroom = Classroom::find($id);
+
+        $study = Input::get('study');
+
+
+        $classroom->studies()->attach([$study]);
     }
 
     /**
@@ -53,14 +93,29 @@ class ClassroomController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name'=>'required'
+            'name'=>'required|max:100',
+            'subject'=>'max:100',
+            'school'=>'max:150',
         ]);
+
+        $id = Auth::id();
+        $profile = User::find($id);
+        if($profile->gender == 'female')
+        {
+            $prefix = 'Mme ';
+        }else{
+            $prefix = 'M. ';
+        }
+
+        $last_name = $profile->last_name;
+
 
         $classroom = new Classroom;
         $classroom->name = Input::get('name');
         $classroom->subject = Input::get('subject');
         $classroom->school = Input::get('school');
         $classroom->user_id = Auth::id();
+        $classroom->creator = $prefix . $last_name;
         $classroom->save();
 
 
@@ -76,31 +131,19 @@ class ClassroomController extends Controller
     public function show($id)
     {
         $classroom = Classroom::findorfail($id);
+        $this->authorize('update', $classroom);
 
        $studies = Classroom::find($id)->studies;
 
-       //$directory = config('files.path');
-
-
-      // $files = File::allFiles($directory);
-
-       // $filename = $files('basename');
-
+       $user_id=Auth::user()->id;
+       $cours=User::find($user_id)->studies;
+       $list= $cours->pluck('name', 'id');
+       $tags=$cours->pluck('tag', 'id');
 
 
 
 
-           // $filename = pathinfo($file, PATHINFO_BASENAME);
-           // $filename = $files[pathinfo(File::allFiles($directory))[PATHINFO_BASENAME]] ;
-
-
-        //dd($files);
-
-
-
-
-
-        return view('Classroom.ClassroomShow', compact('classroom','studies', 'files'));
+        return view('Classroom.ClassroomShow', compact('classroom','studies', 'list', 'tags','cours'));
     }
 
     /**
@@ -111,7 +154,10 @@ class ClassroomController extends Controller
      */
     public function edit($id)
     {
-        //
+        $classroom = Classroom::findorFail($id);
+        $this->authorize('update', $classroom);
+
+        return view('Classroom.ClassroomEdit', compact('classroom'));
     }
 
     /**
@@ -123,7 +169,20 @@ class ClassroomController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name'=>'required|max:100',
+            'subject'=>'max:100',
+            'school'=>'max:150',
+        ]);
+
+        $classroom = Classroom::findorFail($id); 
+
+        $classroom->name = $request->name;
+        $classroom->subject = $request->subject;
+        $classroom->school = $request->school;
+        $classroom->save();
+
+        return redirect(route('Classroom.index'));
     }
 
     /**
@@ -135,7 +194,8 @@ class ClassroomController extends Controller
 
     public function destroy($id)
     {
-        $classroom=Classroom::find($id);
+        $classroom = Classroom::findOrfail($id);
+        $this->authorize('delete', $classroom);
         $classroom->delete();
 
         return back();

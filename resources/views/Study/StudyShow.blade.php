@@ -53,7 +53,7 @@
 
                     <tr>
 
-                        <td class="text-primary"><strong>Terminal S</strong></td>
+                        <td class="text-primary"><strong>{{$study->tag}}</strong></td>
 
                         <td>{!! $study->name !!}</td>
 
@@ -217,7 +217,7 @@
                         </td>
 
 
-                        <td>{!! link_to_route('Classroom.edit', 'Modifier', [$study->id], ['class' => 'btn btn-warning btn-block']) !!}</td>
+                        <td>{!! link_to_route('Study.edit', 'Modifier', [$study->id], ['class' => 'btn btn-warning btn-block']) !!}</td>
 
                         <td>
 

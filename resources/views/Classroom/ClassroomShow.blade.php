@@ -48,21 +48,27 @@
 
                                 <li><button class="btn btn-default btn-block">Cours <span class="glyphicon glyphicon-list pull-right"></span></button> </li>
                                 <ul id="cours">
-                                    <li><a href=""> Les métaux</a></li>
-                                    <li><a href="">Les électrons</a></li>
+                                    @foreach($study->lessons as $doc)
+                                        <li>{{$doc->filename}}</li>
+                                        <br>
+                                    @endforeach
 
                                 </ul>
 
                                 <li><button class="btn btn-default btn-block">Annexes<span class="glyphicon glyphicon-list pull-right"></span></button></li>
                                 <ul id="annexes">
-                                    <li>Index abréviation métaux</li>
-                                    <li>Formules de calcul</li>
+                                    @foreach($study->annexes as $doc)
+                                    <li>{{$doc->filename}}</li>
+                                        <br>
+                                    @endforeach
                                 </ul>
 
-                                <li><button class="btn btn-default btn-block">Exercices<span class="glyphicon glyphicon-list pull-right"></span></button></li>
+                                <li><button class="btn btn-default btn-block " role="button" aria-pressed="true">Exercices<span class="glyphicon glyphicon-list pull-right"></span></button></li>
                                 <ul id="exercices">
-                                    <li>EX métaux</li>
-                                    <li>EX électrons</li>
+                                    @foreach($study->exercises as $doc)
+                                        <li>{{$doc->filename}}</li>
+                                        <br>
+                                    @endforeach
                                 </ul>
                             </ol>
 
@@ -77,26 +83,89 @@
 
                         <div id="abc" class="form-group" style="display: none ">
 
-                            {!! Form::open(['route'=> 'Study.store']) !!}
+                            <select id="sel" name="tag" class="form-control">
+                                <option value="">Trier par tag</option>
+                                @foreach($tags as $tag)
+                                    <option value="{{$tag}}"> {{$tag}}</option>
+                                @endforeach
+                            </select>
 
-                            {!! Form::text('name', null, ['class'=>'form-control', 'placeholder'=> 'Libellé']) !!}
 
-                            {!! Form::hidden('classroom_id',$classroom->id )!!}
 
                             <br>
 
-                            {!! Form::submit('Créer', ['class' => 'btn btn-success pull-right']) !!}
+                            <button id="try" class="btn-default" style="display: none">test </button>
+
+
+
+
+
+
+                                {!! Form::open(['route'=> 'Study.attach']) !!}
+
+                                {!! Form::select('study', $list, null, ['class'=>'form-control', 'placeholder'=>'Selectionner un cours']) !!}
+
+                                {!! Form::hidden('classroom_id',$classroom->id )!!}
+
+
+
+                            <br>
+
+
+                            {!! Form::submit('Importer', ['class' => 'btn btn-success pull-right']) !!}
 
                             {!! Form::close() !!}
 
                             <button id="cancel" class="btn btn-warning pull-left" onclick="div_hide()">Annuler</button>
-
                         </div>
+
+                            <script>
+
+                               //let slug = $("select[name='tag']");
+                                //let selection = $("select[name='study']");
+
+                                //on attend chargement complet de la page
+                                $(function(){
+
+                                    //on récupère notre collection d'objets cours dans une variable javascript
+                                    let cours = $.parseJSON('<?php echo addslashes(json_encode($cours))?>');
+
+                                    console.log(cours);
+
+                                    //on ajoute un event sur le choix d'un tag
+                                    $('#sel').on('change',function(){
+
+                                        $('#try').css('display','block');
+
+                                        //on prepare les options pour le second select
+                                        //on cherche la valeur
+                                        let tagSelected = $(this).val();
+                                        //on va trié
+                                        let options = {}; // defini la var comme object
+                                        $.each(cours,function(key,cour){
+                                            if(cour.tag === tagSelected){ //cour['tag']
+                                                options[cour.id] = cour.name;
+                                            }
+                                        });
+                                        console.log(options);
+                                        //on affiche les options sur le deuxieme sselect
+                                        //d'abord on efface les anciennes options
+                                        $("select[name='study']").empty();
+                                        //on ajoute les options
+                                        $.each(options,function(id,label){
+                                            $("select[name='study']").append('<option value="'+id+'">'+label+'</option>')
+                                        });
+
+                                    });
+                                });
+
+
+                            </script>
 
                             <br>
 
 
-                                <button id="popup" class="btn btn-success pull-right" onclick="div_show()">Nouveau cours</button>
+                                <button id="popup" class="btn btn-success pull-right" onclick="div_show()">Ajouter un cours</button>
 
                                    <script>
                                     //Function To Display Popup

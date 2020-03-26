@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Redirect;
 
 class StudyController extends Controller
 {
@@ -21,11 +22,22 @@ class StudyController extends Controller
     {
 
 
-        $studies = Study::all();
+        $studies = Auth::user()->studies;
+       //if (isset($studies)) {
+        foreach ($studies as $study){
+        $tags = $study->pluck('tag');
+
+       // }
+        $studies= $studies->sortBy('name')->sortby('tag');
+        }
+        //$tags='none';
+
+        //$etiquettes = str_replace(' ', '',$studies);
 
 
 
-        return view('Study.StudyIndex', compact('studies','filenames', 'docs'));
+
+        return view('Study.StudyIndex', compact('studies','filenames', 'docs', 'tags', 'etiquettes'));
 
        // return view('StudiesList', compact('studies'));
     }
@@ -49,7 +61,8 @@ class StudyController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name'=>'required'
+            'name'=>'required|max:150',
+            'tag'=>'max:60',
         ]);
 
 
@@ -77,6 +90,21 @@ class StudyController extends Controller
         return redirect('/Study');
 
     }
+
+    public function attach(Request $request)
+    {
+        $id= $request->classroom_id;
+
+        $classroom = Classroom::find($id);
+
+        $study = Input::get('study');
+
+
+        $classroom->studies()->syncWithoutDetaching([$study]);
+
+        return Redirect::back();
+    }
+
 
     /**
      * Display the specified resource.
@@ -111,7 +139,9 @@ class StudyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $study = Study::findorFail($id);
+
+        return view('Study.StudyEdit',compact('study'));
     }
 
     /**
@@ -123,7 +153,19 @@ class StudyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+
+            'name'=>'required|max:150',
+            'tag'=>'max:60',
+
+            ]);
+
+        $study = Study::findorfail($id);
+        $study->name = $request->name;
+        $study->tag = $request->tag;
+        $study->save();
+
+        return redirect(route('Study.show', [$id]));
     }
 
     /**

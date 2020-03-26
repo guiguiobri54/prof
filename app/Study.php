@@ -12,16 +12,19 @@ class Study extends Model
         'user_id',
     ];
 
+    //liaison à l'utilisateur:
     public function user()
     {
         return $this->belongsTo('App\User');
     }
 
+    //liaison aux fichiers:
     public function documents()
     {
         return $this->hasMany('App\Document');
     }
 
+    //liaison aux categories de fichiers pour affichage:
     public function lessons()
     {
         return $this->hasMany('App\Document')->where('category','lesson')->orderBy('filename');
@@ -33,5 +36,12 @@ class Study extends Model
 
     public function exercises(){
         return $this->hasMany('App\Document')->where('category','exercise')->orderBy('filename');
+    }
+
+    //liaison aux classes
+
+    public function classrooms()
+    {
+        return $this->belongsToMany('App\Classroom');
     }
 }

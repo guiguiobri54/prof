@@ -9,13 +9,13 @@
 
         <div class="panel panel-primary">
 
-            <div class="panel-heading">Création d'un cours</div>
+            <div class="panel-heading">Modification d'un Cours</div>
 
             <div class="panel-body">
 
                 <div class="col-sm-12">
 
-                    {!! Form::open(['route' => 'Study.store', 'class' => 'form-horizontal panel']) !!}
+                    {!! Form::model($study, ['route' => ['Study.update', $study->id], 'method'=>'put', 'class' => 'form-horizontal panel']) !!}
 
                     <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
 
@@ -34,7 +34,7 @@
 
                     </div>
 
-                    {!! Form::submit('Créer', ['class' => 'btn btn-success pull-right']) !!}
+                    {!! Form::submit('Modifier', ['class' => 'btn btn-success pull-right']) !!}
 
                     {!! Form::close() !!}
 

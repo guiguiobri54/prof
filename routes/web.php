@@ -31,7 +31,6 @@ route::resource('/Profile', 'ProfileController');
 route::group(['prefix' => 'Admin', 'middleware' => 'is.admin'], function(){
 
     Route::get('/Home', 'AdminController@home')->name('AdminHome');
-    Route::resource('/School', 'SchoolController');
     route::resource('/Subject', 'SubjectController');
     route::resource('/UserManaging', 'UserManagingController');
 });
@@ -39,13 +38,29 @@ route::group(['prefix' => 'Admin', 'middleware' => 'is.admin'], function(){
 //Route::get('/Profile/MyProfile','ProfileController@MyProfile')->name('MyProfile');
 
 route::resource('/Classroom', 'ClassroomController');
+route::get('/Classroom/{classroom_id}/List','ClassroomController@list')->name('Classroom.usersList');
+
+//route::post('/Classroom', 'ClassroomController@join')->name('join.classroom');
 
 route::resource('/Study', 'StudyController');
 
-route::get('/Classroom/StudiesList', 'ClassroomController@list')->name('Classroom.list');
+route::post('/Study/Attach', 'StudyController@attach')->name('Study.attach');
+
+
 
 route::get('/Study/{study_id}/File/', 'FileController@showUploadForm') ->name('upload.file');
+
+
 
 route::post('/File', 'FileController@saveFile')->name('save.file');
 
 route::delete('/File/{file_id}', 'FileController@destroy')->name('File.destroy');
+
+//route::resource('/ClassroomSubscription', 'ClassroomSubscriptionController',['parameters' => ['/ClassromSubscription'=> 'classroom_id']]);
+
+route::post('/ClassroomSubscription', 'ClassroomSubscriptionController@store')->name('ClassroomSubscription.store');
+//route::get('/ClassroomSubscription', 'ClassroomSubscriptionController@index')->name('ClassroomSubscription.index');
+route::get('/Classroom/{id}/ClassroomSubscription', 'ClassroomSubscriptionController@index')->name('ClassroomSubscription.index');
+route::get('/ClassroomSubscription/{id}/show','ClassroomSubscriptionController@show')->name('ClassroomSubscription.show');
+route::get('/ClassroomSubscription/{id}','ClassroomSubscriptionController@create')->name('ClassroomSubscription.create');
+route::delete('/ClassroomSubscription/{id}/del','ClassroomSubscriptionController@destroy')->name('ClassroomSubscription.destroy');

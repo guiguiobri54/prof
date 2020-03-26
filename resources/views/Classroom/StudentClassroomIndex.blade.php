@@ -17,7 +17,7 @@
 
             <div class="panel-heading">
 
-                <h3 class="panel-title">Mes cours:</h3>
+                <h3 class="panel-title">Mes classes:</h3>
 
             </div>
 
@@ -33,9 +33,7 @@
 
                     <th>Etablissement</th>
 
-                    <th></th>
-
-                    <th></th>
+                    <th>Professeur</th>
 
                     <th></th>
 
@@ -47,7 +45,7 @@
 
                 <tbody>
 
-                @foreach ($classroom as $class)
+                @foreach ($allClassrooms as $class)
 
                     <tr>
 
@@ -57,21 +55,15 @@
 
                         <td>{!! $class->school !!}</td>
 
-                        <td>{!! link_to_route('Classroom.show', 'Voir', [$class->id], ['class' => 'btn btn-success btn-block']) !!}</td>
+                        <td> {!! $class->creator !!}</td>
+
+
+                        <td>{!! link_to_route('ClassroomSubscription.create', 'Rejoindre', [$class->id], ['class' => 'btn btn-success btn-block']) !!}</td>
 
                         <td>{!! link_to_route('Classroom.show', 'Inscrits', [$class->id], ['class' => 'btn btn-default btn-block']) !!}</td>
 
-                        <td>{!! link_to_route('Classroom.edit', 'Modifier', [$class->id], ['class' => 'btn btn-warning btn-block']) !!}</td>
 
-                        <td>
 
-                            {{ Form::open(['method' => 'DELETE', 'route' => ['Classroom.destroy', $class->id]]) }}
-
-                            {!! Form::submit('Supprimer', ['class' => 'btn btn-danger btn-block', 'onclick' => 'return confirm(\'Vraiment supprimer ce cours ?\')']) !!}
-
-                            {!! Form::close() !!}
-
-                        </td>
 
                     </tr>
 
@@ -83,9 +75,8 @@
 
         </div>
 
-        {!! link_to_route('Classroom.create', 'Ajouter une classe', [], ['class' => 'btn btn-info pull-right']) !!}
 
-            <a href="{{route('TeacherHome')}}" class="btn btn-primary">
+            <a href="{{route('StudentHome')}}" class="btn btn-primary">
 
                 <span class="glyphicon glyphicon-circle-arrow-left"></span> Retour
 

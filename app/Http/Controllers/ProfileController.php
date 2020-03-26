@@ -24,9 +24,9 @@ class ProfileController extends Controller
 
         $id= Auth::user()->id;
 
-        $profile = User::find($id)->profiles;
+        $profile = User::find($id);
 
-        return view('ProfileShow', compact('profile'));
+        return view('Profile.ProfileShow', compact('profile'));
     }
 
     /**
@@ -61,12 +61,11 @@ class ProfileController extends Controller
         ]);
 
 
-        $profile = new Profile;
+        $profile =  User::find(auth()->id());
         $profile->gender = Input::get('gender');
         $profile->first_name = Input::get('first_name');
         $profile->last_name = Input::get('last_name');
         $profile->user_type = Input::get('statut');
-        $profile->user_id = auth()->id();
         $profile->save();
 
         $path = config('users.path');
@@ -144,7 +143,11 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'first_name'=> 'required|min:2|alpha',
+            'last_name'=> 'required|min:2|alpha',
+            'gender'=> 'required|in:male,female'
+        ]);
     }
 
     /**
