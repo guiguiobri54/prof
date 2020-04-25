@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Classroom;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Middleware\Authorize;
 use App\Policies\ClassroomPolicy;
+use Illuminate\Database\Eloquent\Builder;
 use App\User;
 use App\Study;
 use Illuminate\Support\Facades\Storage;
@@ -62,16 +64,34 @@ class ClassroomController extends Controller
         {
         return view('Classroom.ClassroomCreate');
         }
-        return response('Unauthorized.', 401);;
+        return response('Unauthorized.', 401);
     }
 
     public function list($id)
     {
         //$classroom = Classroom::find($id)->name;
         $classroom = Classroom::find($id);
-        return view('Classroom.ClassroomUsersList', compact('classroom'));
+        $students = $classroom->attachedUsers()->paginate();
+        //affiche la liste des etudiants
+        $studNb = $classroom->attachedUsers()->count();
+        //Compte du nb d'user attachés
+        $reqNb = $classroom->classroom_subscriptions()->count();
+        //dd($reqNb);
+
+
+        return view('Classroom.ClassroomUsersList', compact('classroom', 'students', 'studNb', 'reqNb'));
     }
 
+    public function banUser($class, $user)
+    {
+        $classroom = Classroom::findorfail($class);
+        $user_id = User::findorfail($user)->id;
+        //dd($user_id);
+        $classroom->attachedUsers()->detach($user_id);
+
+        return back();
+
+    }
     public function join(Request $request)
     {
         $id= $request->classroom_id;
@@ -131,9 +151,10 @@ class ClassroomController extends Controller
     public function show($id)
     {
         $classroom = Classroom::findorfail($id);
-        $this->authorize('update', $classroom);
+        $this->authorize('view', $classroom);
 
        $studies = Classroom::find($id)->studies;
+       $posts = $classroom->posts;
 
        $user_id=Auth::user()->id;
        $cours=User::find($user_id)->studies;
@@ -141,9 +162,7 @@ class ClassroomController extends Controller
        $tags=$cours->pluck('tag', 'id');
 
 
-
-
-        return view('Classroom.ClassroomShow', compact('classroom','studies', 'list', 'tags','cours'));
+        return view('Classroom.ClassroomShow', compact('classroom','studies', 'list', 'tags','cours', 'posts'));
     }
 
     /**

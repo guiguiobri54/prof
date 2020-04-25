@@ -67,7 +67,7 @@
 
                             {{ Form::open(['method' => 'DELETE', 'route' => ['Classroom.destroy', $class->id]]) }}
 
-                            {!! Form::submit('Supprimer', ['class' => 'btn btn-danger btn-block', 'onclick' => 'return confirm(\'Vraiment supprimer ce cours ?\')']) !!}
+                            {!! Form::submit('Supprimer', ['class' => 'btn btn-danger btn-block', 'onclick' => 'return confirm(\'Voulez vous vraiment supprimer ce cours ?\')']) !!}
 
                             {!! Form::close() !!}
 

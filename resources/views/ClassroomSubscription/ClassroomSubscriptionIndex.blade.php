@@ -39,6 +39,8 @@
 
                     <th></th>
 
+                    <th></th>
+
                 </tr>
 
                 </thead>
@@ -57,7 +59,9 @@
 
                         <td>{!! $Sub->message !!}</td>
 
-                        <td>{!! link_to_route('ClassroomSubscription.show', 'Voir', [$Sub->id], ['class' => 'btn btn-success btn-block']) !!}</td>
+                        <td>{!! link_to_route('ClassroomSubscription.show', 'Voir', [$classroom->id, $Sub->id], ['class' => 'btn btn-info btn-block']) !!}</td>
+
+                        <td>{!! link_to_route('ClassroomSubscription.accept', 'Accepter', [$classroom->id, $Sub->id, $Sub->user_id], ['class' => 'btn btn-success btn-block']) !!}</td>
 
                         <td>
 
@@ -81,7 +85,8 @@
 
 
 
-            <a href="javascript:history.back()" class="btn btn-primary">
+            <a href="{{route('Classroom.usersList', [$classroom->id])}}" class="btn btn-primary">
+
 
                 <span class="glyphicon glyphicon-circle-arrow-left"></span> Retour
 

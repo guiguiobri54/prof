@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container-fluid">
+    <div class="container-fluid col-md-12" style="display: flex">
 
         <div class="panel panel-default col-md-9">
 
@@ -10,14 +10,16 @@
 
             <div class="panel-body">
 
-                <div>
+                <section >
 
-                    <section>
+                    @include('Post.PostIndexInClassroom')
 
-                    @include('Wall')
+                </section>
 
-                    </section>
-                </div>
+            </div>
+
+            <div class="panel-footer">
+                @can('create', \App\Classroom::class)<footer>{!! link_to_route('Post.create','Nouvelle publication',[$classroom->id],['class' =>'btn btn-primary']) !!}</footer>@endcan
             </div>
         </div>
 
@@ -205,9 +207,6 @@
             </aside>
 
         </div>
-
-
-
 
 
     </div>

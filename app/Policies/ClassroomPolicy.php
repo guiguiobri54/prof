@@ -4,6 +4,8 @@ namespace App\Policies;
 
 use App\User;
 use App\Classroom;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ClassroomPolicy
@@ -19,7 +21,18 @@ class ClassroomPolicy
      */
     public function view(User $user, Classroom $classroom)
     {
-        return $user->id === $classroom->user_id;
+        //return $user->id === $classroom->user_id;
+        if($attached = $classroom->whereHas('attachedUsers', function (Builder $query){
+                $user=Auth::user();
+                $query->where('email', $user->email);
+            })->count()>0
+            or $user->id === $classroom->user_id)
+        {
+            return true;
+        }
+        return false;
+
+
     }
 
     /**
@@ -30,7 +43,7 @@ class ClassroomPolicy
      */
     public function create(User $user)
     {
-        return $user-> isTeacher();
+        return $user->isTeacher();
     }
 
     /**
@@ -55,7 +68,5 @@ class ClassroomPolicy
     public function delete(User $user, Classroom $classroom)
     {
         return $user->id === $classroom->user_id;
-
-
     }
 }

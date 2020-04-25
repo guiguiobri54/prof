@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Classroom;
 use App\ClassroomSubscription;
 use App\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
 class ClassroomSubscriptionController extends Controller
@@ -18,10 +20,13 @@ class ClassroomSubscriptionController extends Controller
      */
     public function index($id)
     {
-        $classroom_id = Classroom::find($id);
-        $ClassroomSub = ClassroomSubscription::all();
-        //dd($classroom_id);
-        return view('ClassroomSubscription.ClassroomSubscriptionIndex', compact('ClassroomSub'));
+        $classroom = Classroom::find($id);
+        //$ClassroomSub = ClassroomSubscription::all();
+        $classroom_id = Classroom::find($id)->id;
+        //recup de l'id classroom
+        $ClassroomSub =Classroom::find($classroom_id)->classroom_subscriptions;
+        //dd($ClassroomSub);
+        return view('ClassroomSubscription.ClassroomSubscriptionIndex', compact('classroom','ClassroomSub'));
     }
 
     /**
@@ -32,9 +37,36 @@ class ClassroomSubscriptionController extends Controller
     public function create($id)
     {
         $classroom = Classroom::find($id);
-        //dd($classroom_id);
+        //recupération de l'id classroom
+        $class_id = $classroom->id;
+
+        $user= Auth::user()->id;
+
+        if($sub= DB::table('classroom_subscriptions')
+            ->where('classroom_id', $class_id)
+            ->where('user_id', $user)->count()>0
+            or $attached = $classroom->whereHas('attachedUsers', function (Builder $query){
+                    $user=Auth::user();
+                    $query->where('email', $user->email);
+                })->count()>0){
+
+            return back();
+        }
+
+       /* $existe= DB::table('classroom_subscriptions')
+            ->where('classroom_id',$class_id)
+            ->where('user_id', $user)
+            ->get();
+
+        //dd($existe);
+
+        if(count($existe) > 0){
+            //vérification de l'existence d'une requete d'admission existante
+            return back();
+        }*/
         return view('ClassroomSubscription.ClassroomSubscriptionCreate', compact('classroom'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -75,18 +107,19 @@ class ClassroomSubscriptionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+
+    public  function accept($class, $sub, $user_id)
     {
-        //
+        $classroom = Classroom::find($class);
+        $subscription = ClassroomSubscription::findorfail($sub);
+        $user = User::find($user_id)->id;
+        //dd($user);
+        $classroom->attachedUsers()->syncWithoutDetaching([$user]);
+        $subscription->delete($sub);
+
+        return back();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //

@@ -27,8 +27,18 @@ class Classroom extends Model
         return $this->belongsToMany('App\Study');
     }
 
-    public function classroom_subs()
+    public function classroom_subscriptions()
     {
         return $this->hasMany('App\ClassroomSubscription');
+    }
+
+    public function attachedUsers()
+    {
+        return $this->belongsToMany('App\User');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany('App\Post');
     }
 }

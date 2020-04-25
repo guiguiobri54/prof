@@ -29,13 +29,12 @@
                         <tr>
                             <th>Etudiants inscrits:
                                 <ul>
-                                    <li>"x" inscrits au cours</li>
-                                    <li>"x" inscrits actuellement en ligne</li>
+                                    <li><strong class="text-primary">{!! $studNb !!}</strong> inscrit(s) au cours</li>
+                                    <li>"x" inscrits en ligne</li>
                                 </ul>
                             </th>
-                            <th></th>
-                            <th></th>
-                            <th>{!! link_to_route('ClassroomSubscription.index', 'Requêtes d admission', [$classroom->id]) !!}</th>
+
+                            <th><a href="{{route('ClassroomSubscription.index', [$classroom->id])}}" class="text-primary">{!! $reqNb !!} demandes d'admission</a></th>
                         </tr>
 
                         <tr>
@@ -56,18 +55,21 @@
                         <tbody>
 
 
-
+                        @foreach($students as $stud)
                             <tr>
 
-                                <td></td>
+
+                                <td>{!! $stud->last_name !!}</td>
+
+                                <td>{!! $stud->first_name !!}</td>
 
                                 <td></td>
 
                                 <td></td>
 
-                                <td></td>
+                                <td><a class="btn btn-danger" onclick="return confirm('Exclure {!! $stud->first_name !!} {!! $stud->last_name !!} ?')" href="{{route('Classroom.banUser',[$classroom->id, $stud->id])}}">Exclure</a></td>
 
-
+                        @endforeach
                             </tr>
 
 

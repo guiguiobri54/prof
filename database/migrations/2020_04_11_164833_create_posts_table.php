@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClassroomSubTable extends Migration
+class CreatePostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateClassroomSubTable extends Migration
      */
     public function up()
     {
-        Schema::create('classroom_subscriptions', function (Blueprint $table)
+        Schema::create('posts', function (Blueprint $table)
         {
             $table->increments('id');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('user_id');
+            $table->string('title');
+            $table->longText('content');
             $table->timestamps();
-            $table->text('message')->nullable();;
             $table->integer('classroom_id')->unsigned();
             $table->foreign('classroom_id')
 
@@ -41,7 +39,6 @@ class CreateClassroomSubTable extends Migration
      */
     public function down()
     {
-       // Schema::drop('classroom_subs');
-        Schema::drop('classroom_subscriptions');
+        Schema::drop('posts');
     }
 }
