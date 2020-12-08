@@ -38,7 +38,7 @@ class ProfileController extends Controller
     {
         //
 
-        return view('ProfileCreate');
+        return view('Profile.ProfileCreate');
 
         //
 
@@ -57,7 +57,7 @@ class ProfileController extends Controller
         $this->validate($request, [
             'first_name'=> 'required|min:2|alpha',
             'last_name'=> 'required|min:2|alpha',
-            'gender'=> 'required|in:male,female'
+            'gender'=> 'required|in:Masculin,Féminin'
         ]);
 
 
@@ -66,6 +66,18 @@ class ProfileController extends Controller
         $profile->first_name = Input::get('first_name');
         $profile->last_name = Input::get('last_name');
         $profile->user_type = Input::get('statut');
+        if ($request->gender === 'Féminin' && $request->statut === 'Professeur')
+        {
+            $profile->avatar = 'unknownTeacherFemale.png';
+        }elseif ($request->gender === 'Féminin' && $request->statut === 'Etudiant'){
+        $profile->avatar = 'unknownStudentFemale.png';
+        }elseif ($request->gender === 'Masculin' && $request->statut === 'Etudiant'){
+            $profile->avatar = 'unknownStudentMale.png';
+        }else{
+            $profile->avatar = 'unknownTeacherMale.png';
+        }
+
+
         $profile->save();
 
         $path = config('users.path');
@@ -76,7 +88,7 @@ class ProfileController extends Controller
             File::makeDirectory($user_directory);
         }
 
-        if ($profile->user_type == 'teacher'){
+        if ($profile->user_type == 'Professeur'){
 
             $role = User::find(auth()->id());
             $role->role = 2;
@@ -85,7 +97,7 @@ class ProfileController extends Controller
             //return response('Profil crée, rôle mis à jour');
             return redirect('/Teacher/Home');
 
-        }elseif ($profile->user_type == 'student'){
+        }elseif ($profile->user_type == 'Etudiant'){
 
             $role = User::find(auth()->id());
             $role->role = 1;
@@ -114,10 +126,10 @@ class ProfileController extends Controller
     public function show($id)
     {
         //
-       $profile = Profile::findorfail($id);
+       $profile = User::findorfail($id);
 
 
-        return view( 'ProfileShow ', compact('profile'));
+        return view( 'Profile.ProfileShow ', compact('profile'));
     }
 
     /**

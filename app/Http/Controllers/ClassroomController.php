@@ -44,9 +44,7 @@ class ClassroomController extends Controller
         }
         else{
             $allClassrooms = Classroom::all();
-            //$profile = User::find($id)->profiles;
-            //$last_name = $profile->last_name;
-           // dd($last_name);
+
             return view('Classroom.StudentClassroomIndex', compact('allClassrooms'));
         }
     }

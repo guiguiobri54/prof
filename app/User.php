@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','role', 'gender', 'first_name', 'last_name', 'user_type',
+        'name', 'email', 'password','role', 'gender', 'first_name', 'last_name', 'user_type', 'about_me', 'avatar', 'last_login_at', 'last_login_ip',
     ];
 
     /**
@@ -60,6 +60,11 @@ class User extends Authenticatable
     public function attachedClassrooms()
     {
         return $this->belongsToMany('App\Classroom');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
     }
 }
 

@@ -18,4 +18,9 @@ class Post extends Model
     {
         return $this->belongsTo('App\Classroom');
     }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment')->where('parent_id', 0);
+    }
 }

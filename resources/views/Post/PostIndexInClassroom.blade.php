@@ -13,7 +13,7 @@
             </div>
         </div>
         <p>{!! $post->content !!}</p>
-        <footer>{!! $post->updated_at !!}</footer>
+        <footer>Modifié le {!! $post->updated_at->format('d/m/Y G:i') !!}</footer>
     </article>
     @endforeach
 

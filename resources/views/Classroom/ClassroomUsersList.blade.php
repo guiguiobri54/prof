@@ -6,7 +6,7 @@
         <br>
 
 
-            <div class="col-sm-offset-2 col-sm-7">
+            <div class="col-sm-offset-2 col-sm-8">
 
                 @if(session()->has('ok'))
 
@@ -38,6 +38,7 @@
                         </tr>
 
                         <tr>
+                            <th ></th>
 
                             <th>Nom</th>
 
@@ -57,7 +58,12 @@
 
                         @foreach($students as $stud)
                             <tr>
+                                <td><a href="{{route('Profile.show', [$stud->id])}}" class="btn btn-default">
 
+                                        <span class="glyphicon glyphicon-user"></span>
+
+                                    </a>
+                                </td>
 
                                 <td>{!! $stud->last_name !!}</td>
 

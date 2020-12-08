@@ -55,7 +55,13 @@
 
                         <td>{!! $class->school !!}</td>
 
-                        <td> {!! $class->creator !!}</td>
+                        <td> {!! $class->creator !!}
+                             <a style="margin-left: 5%" href="{{route('Profile.show', [$class->user_id])}}" class="btn btn-default">
+
+                                <span class="glyphicon glyphicon-user"></span>
+
+                            </a>
+                        </td>
 
 
                         <td>{!! link_to_route('ClassroomSubscription.create', 'Rejoindre', [$class->id], ['class' => 'btn btn-success btn-block']) !!}</td>

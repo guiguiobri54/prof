@@ -22,9 +22,9 @@
                         <br>
                         <br>
 
-                        {!! Form::radio('gender', 'male' )!!} un homme
+                        {!! Form::radio('gender', 'Masculin' )!!} un homme
 
-                        {!! Form::radio('gender', 'female')!!} une femme
+                        {!! Form::radio('gender', 'Féminin')!!} une femme
 
                         {!! $errors->first('gender', '<small class="help-block">:message</small>') !!}
 
@@ -54,7 +54,7 @@
                         <br>
                         <br>
 
-                        {!!  Form::select('statut', ['student' => 'Etudiant', 'teacher' => 'Professeur'],  'student', ['class' => 'form-control' ]) !!}
+                        {!!  Form::select('statut', ['Etudiant' => 'Etudiant', 'Professeur' => 'Professeur'],  'Etudiant', ['class' => 'form-control' ]) !!}
 
                         {!! $errors->first('statut', '<small class="help-block">:message</small>') !!}
 

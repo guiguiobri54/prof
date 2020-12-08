@@ -31,15 +31,38 @@
                 </div>
 
             </div>
+            <div class="panel-footer">
+            <span id="newComment" class="btn btn-default" ONCLICK="div_show()">Commenter</span>
+            </div>
 
         </div>
+        <section id="createComment" style="display: none">@include('Comment.CommentCreate')</section>
+        <section>
+        @include('Comment.CommentShowInPostShow')
+        </section>
 
-        <a href="javascript:history.back()" class="btn btn-primary">
+        <script>
+            //Function To Display createComment
 
-            <span class="glyphicon glyphicon-circle-arrow-left"></span> Retour
+            function div_show() {
+                document.getElementById('createComment').style.display = "block";
+            }
+            //Function to Hide createComment
+            function div_hide(){
+                document.getElementById('createComment').style.display = "none";
 
-        </a>
+            }
+        </script>
 
+
+
+    </div>
+
+    <div><a href="javascript:history.back()" class="btn btn-primary">
+
+        <span class="glyphicon glyphicon-circle-arrow-left"></span> Retour
+
+    </a>
     </div>
 
 @endsection

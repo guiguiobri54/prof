@@ -67,11 +67,14 @@ class PostController extends Controller
     {
         $post = Post::find($po);
         $classroom = $post->classroom;
+        $comments = $post->comments;
+
+
         //réutilisation de l'autorisation de classroom view
         $this->authorize('view', $classroom);
 
 
-        return view('Post.PostShow', compact('post', 'classroom'));
+        return view('Post.PostShow', compact('post', 'classroom', 'comments'));
     }
 
     /**

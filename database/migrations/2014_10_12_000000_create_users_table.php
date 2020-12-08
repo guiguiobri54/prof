@@ -23,6 +23,10 @@ class CreateUsersTable extends Migration
             $table->string('last_name')->default(0);
             $table->string('gender')->default(0);
             $table->string('user_type')->default(0);
+            $table->text('about_me')->nullable();
+            $table->string('avatar')->default('avatar.png');
+            $table->datetime('last_login_at')->nullable();
+            $table->string('last_login_ip')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
